@@ -1,0 +1,9 @@
+#import { CreateOrderInput } from "./common/schema.graphql"
+#import { Module, TxResponse } into Ethereum from "wrap://ens/ethereum.polywrap.eth"
+
+type Module {
+  createOrder(
+    input: CreateOrderInput!
+    accountAddress: String
+  ): Ethereum_TxResponse
+}

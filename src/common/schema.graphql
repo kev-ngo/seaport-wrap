@@ -1,0 +1,72 @@
+type CreateOrderInput {
+  conduitKey: String
+  zone: String
+  startTime: String
+  endTime: String
+  offer: String
+  consideration: [CreateInputItem]
+  counter: Int32
+  fees: [Fee]
+  allowPartialFills: Boolean
+  restrictedByZone: Boolean
+  useProxy: Boolean
+  salt: String
+}
+
+type ConsiderationInputItem implements CreateInputItem {
+  recipient: String
+}
+
+type Fee {
+  recipient: String
+  basisPoints: Int32
+};
+
+union CreateInputItem = Erc721Item | Erc1155Item | CurrencyItem
+
+union ERC721Item = BasicErc721Item | Erc721ItemWithCriteria
+
+type BasicErc721Item {
+  itemType: String!
+  token: String!
+  identifier: String!
+}
+
+type Erc721ItemWithCriteria {
+  itemType: ItemType!
+  token: String!
+  identifiers: [String!]!
+  amount: String
+  endAmount: String
+}
+
+type BasicErc1155Item {
+  itemType: ItemType!
+  token: String!
+  identifier: String!
+  amount: String!
+  endAmount: String
+}
+
+type Erc1155ItemWithCriteria {
+  itemType: ItemType!
+  token: String!
+  identifiers: [String!]!
+  amount: String!
+  endAmount: String
+}
+
+type CurrencyItem {
+  token: String
+  amount: String!
+  endAmount: String
+}
+
+enum ItemType {
+  NATIVE
+  ERC20
+  ERC721
+  ERC1155
+  ERC721_WITH_CRITERIA
+  ERC1155_WITH_CRITERIA
+}
